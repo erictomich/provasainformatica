@@ -27,14 +27,14 @@ function validaData(date) {
             
             if(mes==1 || mes== 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
                 if ( !(dia >= 1 && dia <= 31) ) {
-                    msg += "Data inválida - Dia Incorreto \n";
+                    msg += "Data inválida \n";
                 }
             } else if ( mes == 2 ) {
 
                 // verifica ano bissexto 
                 if ((ano % 4 == 0) && ((ano % 100 != 0) || (ano % 400 == 0))) {
                     if ( !(dia >= 1 && dia <= 29) ) {
-                        msg += "Data inválida - Dia Incorreto em ano bissexto \n";
+                        msg += "Data inválida \n";
                     }
                 } else {
                     if ( !(dia >= 1 && dia <= 28) ) {
@@ -50,10 +50,10 @@ function validaData(date) {
             }
 
         } else {
-            msg += "Data inválida - mês incorreto";
+            msg += "Data inválida \n";
         }
     } else {
-        msg += 'Ano inválido';
+        msg += 'Data inválida \n';
     }
 
     return msg;

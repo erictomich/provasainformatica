@@ -4,10 +4,11 @@ namespace Source\App;
 
 use League\Plates\Engine;
 
-class UI_Comp_Formulario {
+class UI_Comp_Formulario extends FormValidacao {
 
     private $param; 
     private $templates;
+    private $msgValidacao;
 
     public function __construct($validaScript=false) {
         $this->validaForm = $validaScript;
@@ -31,8 +32,8 @@ class UI_Comp_Formulario {
 
        if( $param ) {
         
-       // $this->param = $param;
-       // $this->validate();
+        $this->param = $param;
+        $this->validate();
 
         echo $this->templates->render('form', $vars);
 
@@ -41,25 +42,33 @@ class UI_Comp_Formulario {
             echo $this->templates->render('form', $vars);
             
        }
-    
-
       
     }
 
     public function validate() {
         
-        if($this->param['data']=="12/12/1212") {
-            echo "teste teste teste";
+        $this->msgValidacao = "";
+
+        if(!$this->checkFormatDate($this->param['data'])) {
+            $this->msgValidacao += "Formato de data inválida";
         }
 
-        if($this->param['texto']=="eric") {
-            echo "eric";
+        if(!$this->campoMinusculas($this->param['texto'])) {
+            $this->msgValidacao += "Campo texto: Use apenas letras minúsculas e espaços";
         }
 
-        if($this->param['texto_grande']=="eric") {
-            echo "eric";
+        if(!$this->campoMaiusculasNumeros($this->param['texto_grande'])) {
+            $this->msgValidacao += "Campo texto grande: Use apenas letras maiúsculas, números e espaços";
         }
 
+
+        if($this->msgValidacao) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
+
 
 }
