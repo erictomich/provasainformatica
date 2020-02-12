@@ -1,0 +1,29 @@
+{
+    "name": "erictomich/ui_comp_formulario",
+    "description": "Componente de formulario desenvolvido para prova do processo seletivo",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric",
+            "email": "erictomich@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "config": {
+        "vendor-dir": "vendor"
+    }, 
+    "autoload": {
+        "psr-4": {
+            "Source\\": "source/"
+        },
+        "files": [
+            "source/Config.php"
+        ]
+    },
+    "require": {
+        "igorescobar/jquery-mask-plugin": "1.14.*",
+        "components/jquery": "3.4.*",
+        "league/plates": "3.*"
+    }
+}
