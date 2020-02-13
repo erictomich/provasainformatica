@@ -47,7 +47,7 @@
                 <div class="col col-lg-3">
                 </div>
                 <div class="col col-lg-9">
-                    <button type="submit">Enviar</button>
+                    <button type="submit">Submit</button>
                 </div>
             </div>
             <div class="row">

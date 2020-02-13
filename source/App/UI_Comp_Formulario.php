@@ -25,12 +25,14 @@ class UI_Comp_Formulario extends FormValidacao {
 
        if( $param ) {
                    
+            if($this->validaForm) {
+                $this->param = $param;
+                if($this->validate()) {
+                    $vars['msgValidacao'] = $this->msgValidacao;
+                } 
+            }
+
             $vars = $param;
-            
-            $this->param = $param;
-            if($this->validate()) {
-                $vars['msgValidacao'] = $this->msgValidacao;
-            } 
 
             echo $this->templates->render('form', $vars);
 
