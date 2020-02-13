@@ -64,24 +64,33 @@ function validaForm(f) {
     
     var msg = "";
 
-    msg += validaData(f.data.value);
+    
 
 
     if(f.data.value == "") {
         msg += 'A data não pode ficar vazia \n';
     } else {
 
-
-     // var m = moment(f.data.value, 'MM-DD-YYYY');
-    //  var teste = m.isValid();
-      
-     // alert(teste);
+        msg += validaData(f.data.value);
 
 
     }
 
     if(f.texto.value == "") {
         msg += 'O texto não não pode ficar vazio \n';
+    }
+
+
+    if(f.texto.value.length > 144) {
+        msg += 'O texto pode ter no máximo 144 caracteres \n';
+    }
+
+    if(f.texto_grande.value == "") {
+        msg += 'O texto grande não não pode ficar vazio \n';
+    }
+
+    if(f.texto.value.length > 255) {
+        msg += 'O texto grande pode ter no máximo 255 caracteres \n';
     }
 
     // Valida o conteúdo do campo texto

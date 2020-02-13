@@ -8,64 +8,75 @@ class UI_Comp_Formulario extends FormValidacao {
 
     private $param; 
     private $templates;
-    private $msgValidacao;
+    private $msgValidacao = "";
+    private $validaForm = false;
 
-    public function __construct($validaScript=false) {
-        $this->validaForm = $validaScript;
+    public function __construct() {
         $this->templates = new Engine('views');
     }
 
-    public function renderer($param=false) {
+    public function UI_Comp_Formulario($validaScript=false) {
+        $this->validaForm = $validaScript;
+    }
 
+    public function renderer($param=false) { 
 
-       if($this->validaForm) {
-        $onSubmit = '  ';
-       } else {
-        $onSubmit = '';
-       } 
-
-       $vars = $param;
-       $vars['data'] = ""; 
-       $vars['texto'] = ""; 
-       $vars['texto_grande'] = ""; 
-       $vars['onsubmit']=$onSubmit;
+       $vars['validaForm'] = $this->validaForm;       
 
        if( $param ) {
-        
-        $this->param = $param;
-        $this->validate();
+                   
+            $vars = $param;
+            
+            $this->param = $param;
+            if($this->validate()) {
+                $vars['msgValidacao'] = $this->msgValidacao;
+            } 
 
-        echo $this->templates->render('form', $vars);
+            echo $this->templates->render('form', $vars);
 
        } else {
             
+            $vars['data'] = ""; 
+            $vars['texto'] = "";
+            $vars['check'] = ""; 
+            $vars['texto_grande'] = ""; 
+
             echo $this->templates->render('form', $vars);
-            
+                
        }
       
     }
 
     public function validate() {
         
-        $this->msgValidacao = "";
+        $msgValidacao = "";
 
         if(!$this->checkFormatDate($this->param['data'])) {
-            $this->msgValidacao += "Formato de data inválida";
+            $msgValidacao = $msgValidacao."<li>Formato de data inválida</li>";
         }
 
         if(!$this->campoMinusculas($this->param['texto'])) {
-            $this->msgValidacao += "Campo texto: Use apenas letras minúsculas e espaços";
+            $msgValidacao = $msgValidacao."<li>Campo texto: Use apenas letras minúsculas e espaços</li>";
+        }
+
+        if(strlen($this->param['texto'])>144) {
+            $msgValidacao = $msgValidacao."<li>O texto pode ter no máximo 144 caracteres</li>";
         }
 
         if(!$this->campoMaiusculasNumeros($this->param['texto_grande'])) {
-            $this->msgValidacao += "Campo texto grande: Use apenas letras maiúsculas, números e espaços";
+            $msgValidacao = $msgValidacao."<li>Campo texto grande: Use apenas letras maiúsculas, números e espaços</li>";
         }
 
+        if(strlen($this->param['texto_grande'])>255) {
+            $msgValidacao = $msgValidacao."<li>O texto grande pode ter no máximo 255 caracteres</li>";
+        }
 
-        if($this->msgValidacao) {
-            return false;
-        } else {
+        $this->msgValidacao = $msgValidacao;
+
+        if(!empty($msgValidacao)) {
             return true;
+        } else {
+            return false;
         }
     }
 
